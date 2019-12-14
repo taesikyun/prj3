@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="http://211.63.89.153:8080/zz_prj3/common/css/main.css"/>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/zz_prj3/common/css/main.css"/>
 <style type="text/css">
 	#class4Wrap{width: 1400px; height: 1100px; margin: 0px auto;}
 	/* 헤더 시작*/
@@ -65,7 +65,7 @@ function checkId(){
 <div id="header">
 	
 		<div id="hLogo">
-			<a href="admin_main.do"><img src="http://211.63.89.153:8080/zz_prj3/images/header_logo.png" title="Home"/></a>
+			<a href="admin_main.do"><img src="http://localhost:8080/zz_prj3/images/header_logo.png" title="Home"/></a>
 		</div>
 		<div id="hContent">
 			<div id="hTitle">관리자 페이지 </div><div style="font-size: 20px; color: #4799CF; font-weight: bold;">[:P]</div>
@@ -147,7 +147,7 @@ function checkId(){
 
 </div>
 <div id="footer">
-<a href="#"><img src="http://211.63.89.153:8080/zz_prj/common/images/arrow.png" width="50" height="50" style="position:fixed; left: 93%; top:85%;  "/></a> 
+<a href="#"><img src="http://localhost:8080/zz_prj/common/images/arrow.png" width="50" height="50" style="position:fixed; left: 93%; top:85%;  "/></a> 
 	<div id="fLogo">
 		
 	</div>

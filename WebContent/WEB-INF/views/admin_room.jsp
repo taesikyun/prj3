@@ -14,7 +14,7 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자</title>
-<link rel="stylesheet" type="text/css" href="http://211.63.89.153:8080/zz_prj3/common/css/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/zz_prj3/common/css/main.css">
 <style type="text/css">
 
 	#class4wrap{width: 1400px; height: 1100px; margin: 0px auto;}
@@ -68,7 +68,7 @@ $(function () {
 	<div id="header">
 	
 		<div id="hLogo">
-			<a href="admin_main.do"><img src="http://211.63.89.153:8080/zz_prj3/images/header_logo.png" title="Home"/></a>
+			<a href="admin_main.do"><img src="http://localhost:8080/zz_prj3/images/header_logo.png" title="Home"/></a>
 		</div>
 		<div id="hContent">
 			<div id="hTitle">관리자 페이지 </div><div style="font-size: 20px; color: #4799CF; font-weight: bold;">사이트이름</div>
@@ -91,7 +91,7 @@ $(function () {
 		<br/>
 		
 		<div style="margin: 0px auto; width: 900px" class="d-flex justify-content-end">
-			<a href="move_add_concept_form.do"><img src="http://211.63.89.153:8080/zz_prj3/images/plus.png" title="공간 추가"/></a>&nbsp;
+			<a href="move_add_concept_form.do"><img src="http://localhost:8080/zz_prj3/images/plus.png" title="공간 추가"/></a>&nbsp;
 		</div>
 		<br/>
 		
@@ -100,7 +100,7 @@ $(function () {
 			<div class="d-flex flex-wrap">
 				<c:forEach var="concept" items="${listConcept}">
 					<div class="card" style="width: 300px;">
-					  <img src="http://211.63.89.153:8080/zz_prj3/uploadImage/${concept.image}" class="card-img-top" alt="...">
+					  <img src="http://localhost:8080/zz_prj3/uploadImage/${concept.image}" class="card-img-top" alt="...">
 					  <div class="card-body">
 					    <h5 class="card-title"><c:out value="${concept.concept_name}"/></h5>
 					    <p class="card-text"><c:out value="${concept.brief_info}"/></p>
@@ -119,13 +119,13 @@ $(function () {
 			<hr><!-- 경계 -->
 			
 			<div style="margin: 0px auto; width: 900px" class="d-flex justify-content-end">
-				<a href="move_add_room_form.do"><img src="http://211.63.89.153:8080/zz_prj3/images/plus.png" title="공간 추가"/></a>&nbsp;
+				<a href="move_add_room_form.do"><img src="http://localhost:8080/zz_prj3/images/plus.png" title="공간 추가"/></a>&nbsp;
 			</div>
 			<label>룸 이미지</label>
 			<div class="d-flex flex-wrap">
 				<c:forEach var="room" items="${listRoom}">
 					<div class="card" style="width: 300px;">
-					  <img src="http://211.63.89.153:8080/zz_prj3/common/images/${room.image1 }" class="card-img-top" alt="...">
+					  <img src="http://localhost:8080/zz_prj3/common/images/${room.image1 }" class="card-img-top" alt="...">
 					  <div class="card-body">
 					    <h5 class="card-title"><c:out value="${room.room_name }"/></h5>
 					    <p class="card-text"><c:out value="${room.brief_info }"/></p>
@@ -151,7 +151,7 @@ $(function () {
 	<div id="footer">
 	<!-- 900(w) x 150(h) -->
 		<div id="fLogo">
-			<img src="http://211.63.89.153:8080/zz_prj3/common/images/f_logo.png"/>
+			<img src="http://localhost:8080/zz_prj3/common/images/f_logo.png"/>
 		</div>
 		<div id="fContent">
 			&copy;CopyRight. AllRight Reserved. Class 4<br/>

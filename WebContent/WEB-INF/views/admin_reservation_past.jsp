@@ -14,7 +14,7 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자</title>
-<link rel="stylesheet" type="text/css" href="http://211.63.89.153:8080/zz_prj3/common/css/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/zz_prj3/common/css/main.css">
 <style type="text/css">
 
 	#hTitle{font-family: '고딕'; font-size: 30px; font-weight: bold; color: #F5F5F5;}

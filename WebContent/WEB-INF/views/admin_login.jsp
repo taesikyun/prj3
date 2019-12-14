@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="http://211.63.89.153:8080/zz_prj3/common/css/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/zz_prj3/common/css/main.css">
 <style type="text/css">
 	#class4wrap{width: 1400px; height: 1100px; margin: 0px auto;}
 	/* 헤더 시작 */
@@ -94,7 +94,7 @@ $(function () {
 	<div id="header">
 	
 		<div id="hLogo">
-			<a href="#"><img src="http://211.63.89.153:8080/zz_prj3/images/header_logo.png" title="Home"/></a>
+			<a href="#"><img src="http://localhost:8080/zz_prj3/images/header_logo.png" title="Home"/></a>
 		</div>
 		<div id="hContent">
 			<div id="hTitle">관리자 페이지 </div><div style="font-size: 20px; color: #4799CF; font-weight: bold;">사이트이름</div>
@@ -119,7 +119,7 @@ $(function () {
 	<div id="footer">
 	<!-- 900(w) x 150(h) -->
 		<div id="fLogo">
-			<img src="http://211.63.89.153:8080/zz_prj3/common/images/f_logo.png"/>
+			<img src="http://localhost:8080/zz_prj3/common/images/f_logo.png"/>
 		</div>
 		<div id="fContent">
 			&copy;CopyRight. AllRight Reserved. Class 4<br/>
