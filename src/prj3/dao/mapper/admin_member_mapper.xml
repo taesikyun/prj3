@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="prj3.dao.mapper.admin_member_mapper">
+
+<!-- member 전체 조회 -->
+	<select id="selectAllMember" resultType="mvd">
+		select user_id, user_name, phone, cnt
+				from (select rownum rnum, user_id, user_name, phone, cnt
+							from (select m.user_id, m.user_name, m.phone, count(w.user_id)cnt
+										from member_info m, warning_user w
+								<where>
+									(w.user_id(+) = m.user_id)
+									<if test='keyword != null and !keyword.equals("")'>
+										<choose>
+											<when test='field == "user_id"'>
+												and m.user_id like '%'||#{keyword}||'%'
+											</when>
+											<otherwise>
+												and ${field} like '%'||#{keyword}||'%'
+											</otherwise>
+										</choose>
+									</if>
+								</where>
+								group by m.user_id, user_name, phone
+								order by user_name))
+		where rnum between #{startNum} and #{endNum}
+	</select>
+	
+	<select id="selectTotalCount" resultType="int" parameterType="sVO">
+		select count(*)cnt 
+		from member_info
+		<where>
+			<if test='keyword != null and !keyword.equals("")'>
+				<choose>
+					<when test='field == "user_id"'>
+						and i.user_id like '%'||#{keyword}||'%'
+					</when>
+					<otherwise>
+						and ${field} like '%'||#{keyword}||'%'
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+	</select>
+		
+		
+	<!-- member detail 조회 -->
+	<select id="selectMemberDetail" resultType="mdd" parameterType="String">
+		select m.user_id, user_name, phone, email, count(w.user_id)cnt
+		from member_info m, warning_user w
+		where (w.user_id(+) = m.user_id) and m.user_id=#{user_id}
+		group by m.user_id, user_name, phone, email
+	</select>
+	
+	
+	<!-- user_id에 따른 예약현황 불러오기 -->
+	<select id="selectUserReservation" resultType="mrd" parameterType="String">
+		select m.user_id, r.reservation_num
+		from member_info m, reservation r
+		where (r.user_id = m.user_id) and m.user_id=#{user_id}
+	</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+

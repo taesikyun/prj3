@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties resource="properties/database.properties"/>
+	<typeAliases>
+		<typeAlias type="prj3.domain.QnABoardDetailDomain" alias="qbdd"/>
+		<typeAlias type="prj3.domain.NoticeBoardDetailDomain" alias="nbdd"/>
+		<typeAlias type="prj3.domain.NoticeListDomain" alias="nld"/>
+	
+		<typeAlias type="prj3.domain.MainReservationViewDomain" alias="mrvd"/>
+		<typeAlias type="prj3.domain.MainNoticeViewDomain" alias="mnvd"/>
+		<typeAlias type="prj3.domain.MainQnaViewDomain" alias="mqvd"/>
+	
+		<typeAlias type="prj3.domain.RoomConceptViewDomain" alias="rcvd"/>
+		<typeAlias type="prj3.domain.RoomViewDomain" alias="rvd"/>
+		<typeAlias type="prj3.domain.ConceptNameDomain" alias="cnd"/>
+		<typeAlias type="prj3.domain.RoomConceptDetailDomain" alias="rcdd"/>
+		<typeAlias type="prj3.domain.RoomDetailDomain" alias="rdd"/>
+		<typeAlias type="prj3.vo.RoomConceptVO" alias="rcVO"/>
+		<typeAlias type="prj3.vo.RoomRoomVO" alias="rrVO"/>
+
+		<typeAlias type="prj3.domain.AccountViewDomain" alias="avd"/>
+		<typeAlias type="prj3.vo.AccountVO" alias="aVO"/>
+		
+		<typeAlias type="prj3.vo.SearchVO" alias="sVO"/>
+		<typeAlias type="prj3.domain.BlacklistViewDomain" alias="bvd"/>
+		<typeAlias type="prj3.vo.InsertBLacklistVO" alias="ibVO"/>
+		<typeAlias type="prj3.domain.WarningTypeDomain" alias="wtd"/>
+		
+		<typeAlias type="prj3.domain.MemberViewDomain" alias="mvd"/>
+		<typeAlias type="prj3.domain.MemberDetailDomain" alias="mdd"/>
+		<typeAlias type="prj3.domain.MemberReservationDomain" alias="mrd"/>
+		
+	</typeAliases>
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <mappers>
+    <mapper resource="prj3/dao/mapper/admin_login_mapper.xml"/>
+    <mapper resource="prj3/dao/mapper/admin_main_mapper.xml"/>
+    <mapper resource="prj3/dao/mapper/admin_room_mapper.xml"/>
+    <mapper resource="prj3/dao/mapper/admin_account_mapper.xml"/>
+    <mapper resource="prj3/dao/mapper/admin_blacklist_mapper.xml"/>
+    <mapper resource="prj3/dao/mapper/admin_member_mapper.xml"/>
+    <mapper resource="prj3/dao/mapper/admin_reservation_mapper.xml"/>
+    <mapper resource="prj3/dao/mapper/qna_mapper.xml"/>
+    <mapper resource="prj3/dao/mapper/notice_mapper.xml"/>
+  </mappers>
+</configuration>
+
+
+
+
+
+

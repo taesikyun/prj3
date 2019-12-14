@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="prj3.dao.mapper.admin_reservation_mapper">
+<!-- 지나지 않은 예약들 -->
+<!-- reservation 전체 조회 -->
+	<select id="selectAllReservation" resultType="prj3.domain.ReservationViewDomain" parameterType="sVO">
+		select reservation_num, user_id, name, room_name, year, month, day, pay_status
+		from (select rownum r, reservation_num, user_id, name, room_name, year, month, day, pay_status
+		from(select r.reservation_num, user_id, name, room_name, year, month, day, pay_status
+		from reservation  r, reservation_info i
+		<where>
+			(r.reservation_num = i.reservation_num)
+			<if test='keyword != null and !keyword.equals("")'>
+				<choose>
+					<when test='field == "user_id"'>
+						and user_id like '%'||#{keyword}||'%'
+					</when>
+					<otherwise>
+						and ${field} like '%'||#{keyword}||'%'
+					</otherwise>
+				</choose>
+			</if>
+			and to_date(year||'-'||to_char(month,'00')||'-'||to_char(day,'00')) >= to_char(sysdate,'yyyy-mm-dd')
+		</where>
+			group by r.reservation_num, user_id, name, room_name, year, month, day, pay_status
+			order by to_date(year||'-'||to_char(month,'00')||'-'||to_char(day,'00')) asc))
+		where r between #{startNum} and #{endNum}
+	</select>	
+
+	<!-- 예약 수 확인 -->
+	<select id="reservationTotalCount" resultType="int" parameterType="sVO">
+		select sum(count(*))
+		from reservation
+		<where>
+		to_date(use_date) >= to_char(sysdate,'yyyy-mm-dd')
+			<if test='keyword != null and !keyword.equals("")'>
+				<choose>
+					<when test='field == "user_id"'>
+						and user_id like '%'||#{keyword}||'%'
+					</when>
+					<otherwise>
+						and ${field} like '%'||#{keyword}||'%'
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+		group by reservation_num
+	</select>
+	
+	<!-- reservation 상세조회 -->
+	<select id="selectDetailReservation" resultType="prj3.domain.ReservationDetailDomain" parameterType="String">
+		select r.reservation_num, room_name, user_id, name, phone, email, charge, year, month, day,
+				to_char(reservation_date, 'yyyy-mm-dd hh24:mi')reservation_date, pay_status, to_char(pay_date,'yyyy-mm-dd hh24:mi')pay_date, pay_method, require
+		from reservation r, reservation_info i
+		where	(r.reservation_num = i.reservation_num)	and (r.reservation_num = #{reservation_num})
+		group by r.reservation_num, room_name, user_id, name, phone, email, charge, year, month, day,
+				reservation_date, pay_status, pay_date, pay_method, require
+	</select>
+	
+	<!-- 결제 상태 변경 -->
+	<update id="updateReservation" parameterType="String">
+		update reservation
+		set 	pay_date = sysdate, pay_status='Y'
+		where reservation_num=#{reservation_num}
+	</update>
+	
+	<!-- 입금 상태 변경 -->
+	<update id="updateDeposit" parameterType="String">
+		update deposit
+		set 	deposit_flag='Y'
+		where reservation_num=#{reservation_num}
+	</update>
+	
+	
+	
+	
+	
+<!-- ==========================================================지난 예약들========================================================== -->
+<!-- reservation 전체 조회 -->
+	<select id="selectAllPastReservation" resultType="prj3.domain.PastReservationViewDomain" parameterType="sVO">
+		select reservation_num, user_id, name, room_name, year, month, day, pay_status, r_realtime
+		from(select rownum r, reservation_num, user_id, name, room_name, year, month, day, pay_status, r_realtime
+				from(select r.reservation_num, user_id, name, room_name, year, month, day, pay_status, t.r_realtime
+						from reservation  r, reservation_info i, reservation_time t
+		<where>
+			(r.reservation_num = i.reservation_num and i.r_time = t.r_time)
+			<if test='keyword != null and !keyword.equals("")'>
+				<choose>
+					<when test='field == "user_id"'>
+						and user_id like '%'||#{keyword}||'%'
+					</when>
+					<otherwise>
+						and ${field} like '%'||#{keyword}||'%'
+					</otherwise>
+				</choose>
+			</if>
+			and to_date(year||'-'||to_char(month,'00')||'-'||to_char(day,'00')) &lt; to_char(sysdate,'yyyy-mm-dd')))
+		</where>
+		where r between #{startNum} and #{endNum}
+	</select>	
+	
+	<!-- 예약 수 확인 -->
+	<select id="pastReservationTotalCount" resultType="int" parameterType="sVO">
+		select count(*)
+		from reservation  r, reservation_info i
+		<where>
+		(r.reservation_num = i.reservation_num) and to_date(use_date) &lt; to_char(sysdate,'yyyy-mm-dd')
+			<if test='keyword != null and !keyword.equals("")'>
+				<choose>
+					<when test='field == "user_id"'>
+						and user_id like '%'||#{keyword}||'%'
+					</when>
+					<otherwise>
+						and ${field} like '%'||#{keyword}||'%'
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+	</select>
+	
+	<!-- reservation 상세조회 -->
+	<select id="selectDetailPastReservation" resultType="prj3.domain.PastReservationDetailDomain" parameterType="prj3.vo.PastReservationDetailVO">
+		select r.reservation_num, room_name, user_id, name, phone, email, charge, year, month, day, t.r_realtime,
+				to_char(reservation_date, 'yyyy-mm-dd hh24:mi')reservation_date, pay_status, pay_date, pay_method, require
+		from reservation r, reservation_info i, reservation_time t
+		where	(r.reservation_num = i.reservation_num and i.r_time = t.r_time)	and (r.reservation_num = #{reservation_num} and t.r_realtime=#{r_realtime})
+	</select>
+	
+	
+	<!-- 예약번호에 해당하는 룸 이용시간  -->
+	<resultMap type="prj3.domain.RealtimeListDomain" id="realtime">
+		<result column="R_REALTIME" property="r_realtime"/>
+	</resultMap>
+	<select id="selectRealtime" resultMap="realtime" parameterType="String">
+		select t.r_realtime
+		from RESERVATION_INFO i, RESERVATION_TIME t
+		where (i.r_time = t.r_time) and i.reservation_num=#{reservation_num}
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

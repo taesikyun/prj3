@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="prj3.dao.mapper.admin_main_mapper">
+
+	<select id="selectReservation3" resultType="mrvd">
+		select reservation_num, name, room_name,r_realtime
+		from(select r.reservation_num, name, room_name, t.r_realtime , to_date(year||'-'||to_char(month,'00')||'-'||to_char(day,'00'))today
+					from reservation r, reservation_info i, reservation_time t
+					where (r.reservation_num = i.reservation_num and t.r_time = i.r_time))
+		where today = to_char(sysdate,'yyyy-mm-dd')
+	</select>
+	
+	<select id="selectNotice3" resultType="mnvd">
+		select n_num, n_subject, to_char(n_input_date, 'yyyy-mm-dd hh24:mi:ss')n_input_date  
+		from (select rownum r, n_num, n_subject, n_input_date 
+					from (select n_num, n_subject, n_input_date 
+								from notice
+								order by n_input_date desc))
+		where r between 1 and 3
+	</select>
+
+	<select id="selectQna3" resultType="mqvd">
+		select q_num, q_subject, user_id, to_char(q_input_date, 'yyyy-mm-dd hh24:mi:ss')q_input_date, q_answer_flag
+		from (select rownum r, q_num, q_subject, user_id, q_input_date, q_answer_flag
+					from (select q_num, q_subject, user_id, q_input_date, q_answer_flag
+								from qna
+								order by q_input_date desc))
+		where r between 1 and 3
+	</select>
+
+</mapper>

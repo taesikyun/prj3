@@ -1,0 +1,12 @@
+@charset "UTF-8";
+#enoTitle{width: 80px; height: 25px;}
+#enameTitle{width: 150px; height: 25px;}
+#salTitle{width: 100px; height: 25px;}
+#jobTitle{width: 120px; height: 25px;}
+#hiredateTitle{width: 150px; height: 25px;}
+
+td{text-align: center;}
+table{border-top: 2px solid #3C4790; border-bottom: 1px solid #3C4790; border-spacing: 0px;}
+th{background-color: #F3F3F3; border-bottom: 1px solid #3C4790; }
+td{border-top: 1px solid #EEEEEE; height: 25px;}
+tr:hover { background-color: #F3F3F3;}

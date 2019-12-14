@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="prj3.dao.mapper.admin_login_mapper">
+
+	<resultMap type="prj3.domain.LoginDomain" id="LoginDomain">
+		<result column="admin_id" property="admin_id"/>
+		<result column="pass" property="pass"/>
+	</resultMap>
+  <select id="selectAdmin" resultMap="LoginDomain">
+    SELECT ADMIN_ID, PASS 
+    FROM ADMIN
+  </select>
+</mapper>

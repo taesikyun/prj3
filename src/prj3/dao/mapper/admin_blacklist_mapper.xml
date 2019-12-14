@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="prj3.dao.mapper.admin_blacklist_mapper">
+
+<!-- 전체 블랙리스트  조회 -->
+	<resultMap type="bvd" id="blacklistAllView">
+		<result column="user_id" property="user_id"/>
+		<result column="user_name" property="user_name"/>
+		<result column="warning_type" property="warning_type"/>
+		<result column="input_date" property="input_date"/>
+		<result column="warning_content" property="warning_content"/>
+	</resultMap>
+	<select id="selectAllBlacklist" resultMap="blacklistAllView" parameterType="sVO">
+		
+		select user_id, user_name, warning_type, to_char(input_date, 'yyyy-mm-dd hh24:mi')input_date, warning_content
+		from	(select rownum rnum, user_id, user_name, warning_type, input_date, warning_content
+					from	(select i.user_id, i.user_name, w.warning_type, u.input_date, u.warning_content
+								from warning w, warning_user u, member_info i
+								<where>
+									(u.user_id = i.user_id and u.warning_code = w.warning_code)
+									<if test='keyword != null and !keyword.equals("")'>
+										<choose>
+											<when test='field == "user_id"'>
+												and i.user_id like '%'||#{keyword}||'%'
+											</when>
+											<otherwise>
+												and ${field} like '%'||#{keyword}||'%'
+											</otherwise>
+										</choose>
+									</if>
+								</where>
+								order by input_date desc))
+		where rnum between #{startNum} and #{endNum}
+	</select>
+	
+	<select id="memberTotalCount" resultType="int" parameterType="sVO">
+		select count(*)cnt 
+		from warning_user u, member_info i
+		<where>
+			(u.user_id = i.user_id)
+			<if test='keyword != null and !keyword.equals("")'>
+				<choose>
+					<when test='field == "user_id"'>
+						and i.user_id like '%'||#{keyword}||'%'
+					</when>
+					<otherwise>
+						and ${field} like '%'||#{keyword}||'%'
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 블랙리스트 코드 조회 -->
+	<select id="selectWarningType" resultType="wtd">
+		select	warning_type, warning_code
+		from		warning
+	</select>
+
+
+	<!-- 블랙리스트 추가 -->
+	<insert id="insertBlacklist" parameterType="ibVO">
+		insert into warning_user(user_id, input_date, warning_content, warning_code)
+		values(#{user_id}, sysdate, #{warning_content}, (select warning_code from WARNING where warning_type=#{warning_type}))
+	</insert>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

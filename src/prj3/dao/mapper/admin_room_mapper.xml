@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="prj3.dao.mapper.admin_room_mapper">
+
+	<resultMap type="rcvd" id="conceptView">
+		<result column="concept_name" property="concept_name"/>
+		<result column="brief_info" property="brief_info"/>
+		<result column="image" property="image"/>
+	</resultMap>
+	<select id="selectConcept" resultMap="conceptView">
+		select	concept_name, brief_info, image
+		from		concept
+	</select>
+	
+	<resultMap type="rvd" id="roomView">
+		<result column="room_name" property="room_name"/>
+		<result column="brief_info" property="brief_info"/>
+		<result column="image1" property="image1"/>
+	</resultMap>
+	<select id="selectRoom" resultMap="roomView">
+		select	room_name, brief_info, image1
+		from		room_info
+	</select>
+	
+	<!-- 컨셉 추가하기 -->
+	<insert id="insertConcept" parameterType="rcVO">
+		insert into concept(concept_name, concept_name2, brief_info, info, image)
+		values(#{concept_name}, #{concept_name2}, #{brief_info}, #{info}, #{image})
+	</insert>
+	
+	<!-- 룸 추가하기 -->
+	<insert id="insertRoom" parameterType="rrVO">
+		insert into room_info(room_name, room_name2, concept_name, brief_info, info, image1, image2, image3, person_num, charge)
+		values(#{room_name}, #{room_name2}, #{concept_name}, #{brief_info}, #{info}, #{image1}, #{image2}, #{image3}, #{person_num}, #{charge})
+	</insert>
+	
+	
+	
+	<!-- 룸 추가 폼으로 이동 시 컨셉 카테고리 보여주기 -->
+	<resultMap type="cnd" id="conceptList">
+		<result column="concept_name" property="concept_name"/>
+		<result column="concept_name2" property="concept_name2"/>
+	</resultMap>
+	<select id="conceptSelect" resultMap="conceptList">
+		select	concept_name, concept_name2
+		from		concept
+	</select>
+	
+	<!-- 컨셉 상세보기 클릭 시 상세설명 보여주기 -->
+	<resultMap type="rcdd" id="conceptDetail">
+		<result column="concept_name2" property="concept_name2"/>
+		<result column="brief_info" property="brief_info"/>
+		<result column="info" property="info"/>
+		<result column="image" property="image"/>
+	</resultMap>
+	<select id="selectConceptDetail" resultMap="conceptDetail" parameterType="String">
+		select	concept_name2, brief_info, info, image
+		from		concept
+		where		concept_name=#{concept_name}
+	</select>
+	
+	<!-- 룸 상세보기 클릭 시 상세설명 보여주기 -->
+	<resultMap type="rdd" id="roomDetail">
+		<result column="room_name2" property="room_name2"/>
+		<result column="person_num" property="person_num"/>
+		<result column="info" property="info"/>
+		<result column="brief_info" property="brief_info"/>
+		<result column="charge" property="charge"/>
+		<result column="image1" property="image1"/>
+		<result column="image2" property="image2"/>
+		<result column="image3" property="image3"/>
+		<result column="concept_name" property="concept_name"/>
+	</resultMap>
+	<select id="selectRoomDetail" resultMap="roomDetail" parameterType="String">
+		select	room_name2, person_num, info, brief_info, charge, image1, image2, image3, concept_name
+		from		room_info
+		where		room_name=#{room_name}
+	</select>
+	
+	<update id="updateConcept" parameterType="rcVO">
+		update	concept
+		set			concept_name2=#{concept_name2}, brief_info=#{brief_info}, info=#{info}
+		<if test="image != null">
+		, image=#{image}
+		</if>
+		where		concept_name=#{concept_name}
+	</update>
+	
+	<delete id="deleteConcept" parameterType="String">
+		delete from	concept
+		where				concept_name=#{concept_name}
+	</delete>
+	
+	
+	<update id="updateRoom" parameterType="rrVO">
+		update	room_info
+		set			room_name2=#{room_name2}, person_num=#{person_num}, charge=#{charge}, brief_info=#{brief_info}, info=#{info}
+		<if test="image1 != null">
+		, image1=#{image1}
+		</if>
+		<if test="image2 != null">
+		, image2=#{image2}
+		</if>
+		<if test="image3 != null">
+		, image3=#{image3}
+		</if>
+		where		room_name=#{room_name}
+	</update>
+	
+	<delete id="deleteRoom" parameterType="String">
+		delete from	room_info
+		where				room_name=#{room_name}
+	</delete>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
